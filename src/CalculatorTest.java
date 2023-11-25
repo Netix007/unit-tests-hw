@@ -1,7 +1,6 @@
 import seminars.first.model.Calculator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class CalculatorTest {
     public static void main(String[] args) {
@@ -51,5 +50,26 @@ public class CalculatorTest {
 
         System.out.println(Calculator.calculation(2_147_483_647, 1, '+')); // integer overflow
         System.out.println(Calculator.squareRootExtraction(169));
+
+        // Проверка метода calculatingDiscount с использованием библиотеки AssertJ
+
+        assertThat(Calculator.calculatingDiscount(100.33, 20)).
+                isCloseTo(80.2640, within(0.001));
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(-100, 30)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The purchase amount must be greater than 0");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(0, 30)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The purchase amount must be greater than 0");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(100, 300)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The discount amount must be greater than 0 and less than 100");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(100, -300)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The discount amount must be greater than 0 and less than 100");
     }
 }

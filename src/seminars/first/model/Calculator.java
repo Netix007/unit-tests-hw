@@ -1,5 +1,7 @@
 package seminars.first.model;
 
+import org.assertj.core.api.ThrowableAssert;
+
 public class Calculator {
     public static int calculation(int firstOperand, int secondOperand, char operator) {
         int result;
@@ -53,6 +55,11 @@ public class Calculator {
      * @return возвращает сумму покупки с учетом скидки
      */
     public static double calculatingDiscount(double purchaseAmount, int discountAmount) {
-        return 0;
+        if (purchaseAmount <= 0) {
+            throw new ArithmeticException("The purchase amount must be greater than 0");
+        } else if (discountAmount <= 0 || discountAmount >= 100) {
+            throw new ArithmeticException("The discount amount must be greater than 0 and less than 100");
+        }
+        return purchaseAmount / 100 * (100 - discountAmount);
     }
 }

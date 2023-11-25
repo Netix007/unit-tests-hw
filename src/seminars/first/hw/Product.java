@@ -1,6 +1,6 @@
 package seminars.first.hw;
 
-public class Product {
+public class Product implements Comparable{
     private int cost; // Стоимость продукта
     private String title; // Название
 
@@ -19,4 +19,18 @@ public class Product {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Product p = (Product) o;
+        return this.cost - p.cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + this.title + " "
+                + "Cost: " + this.cost;
+    }
+
 }
+

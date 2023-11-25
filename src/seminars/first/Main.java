@@ -1,6 +1,7 @@
 package seminars.first;
 
 import seminars.first.model.Hero;
+import seminars.first.model.Calculator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,11 +11,14 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class Main {
 
 
     public static void main(String[] args) {
+
+        assertCalculateDiscount();
         //assertConditionA();
 
 
@@ -154,4 +158,24 @@ public class Main {
         assertThat(hero.isHuman()).isTrue();
     }
 
+    public static void assertCalculateDiscount() {
+        assertThat(Calculator.calculatingDiscount(100, 30)).isEqualTo(70);
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(-100, 30)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The purchase amount must be greater than 0");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(0, 30)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The purchase amount must be greater than 0");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(100, 300)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The discount amount must be greater than 0 and less than 100");
+
+        assertThatThrownBy(() -> Calculator.calculatingDiscount(100, -300)).
+                isInstanceOf(ArithmeticException.class)
+                .hasMessageContaining("The discount amount must be greater than 0 and less than 100");
+
+    }
 }
